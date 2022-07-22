@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ControllerExceptionHandler.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">accountms</a> &gt; <a href="index.source.html" class="el_package">com.cognizant.accountservice.exceptionhandling</a> &gt; <span class="el_source">ControllerExceptionHandler.java</span></div><h1>ControllerExceptionHandler.java</h1><pre class="source lang-java linenums">package com.cognizant.accountservice.exceptionhandling;
+
+import java.time.LocalDateTime;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.context.request.WebRequest;
+
+import com.cognizant.accountservice.model.AccountErrorResponse;
+
+@RestControllerAdvice
+<span class="fc" id="L14">public class ControllerExceptionHandler {</span>
+
+	@ExceptionHandler(MinimumBalanceException.class)
+	public ResponseEntity&lt;AccountErrorResponse&gt; minimumBalanceException(MinimumBalanceException exception,
+			WebRequest request) {
+<span class="nc" id="L19">		AccountErrorResponse response = new AccountErrorResponse(LocalDateTime.now(), HttpStatus.NOT_ACCEPTABLE,</span>
+<span class="nc" id="L20">				exception.getMessage(), &quot;Minimum Balance Problem&quot;);</span>
+<span class="nc" id="L21">		return new ResponseEntity&lt;&gt;(response, HttpStatus.NOT_ACCEPTABLE);</span>
+	}
+
+	@ExceptionHandler(AccountNotFoundException.class)
+	public ResponseEntity&lt;AccountErrorResponse&gt; accountNotFoundException(AccountNotFoundException exception,
+			WebRequest request) {
+<span class="nc" id="L27">		AccountErrorResponse response = new AccountErrorResponse(LocalDateTime.now(), HttpStatus.NOT_ACCEPTABLE,</span>
+<span class="nc" id="L28">				exception.getMessage(), &quot;Account not found&quot;);</span>
+<span class="nc" id="L29">		return new ResponseEntity&lt;&gt;(response, HttpStatus.NOT_ACCEPTABLE);</span>
+	}
+
+	@ExceptionHandler(AccessDeniedException.class)
+	public ResponseEntity&lt;AccountErrorResponse&gt; accessDeniedException(AccessDeniedException exception,
+			WebRequest request) {
+<span class="nc" id="L35">		AccountErrorResponse response = new AccountErrorResponse(LocalDateTime.now(), HttpStatus.NOT_ACCEPTABLE,</span>
+<span class="nc" id="L36">				exception.getMessage(), &quot;Access Denied&quot;);</span>
+<span class="nc" id="L37">		return new ResponseEntity&lt;&gt;(response, HttpStatus.NOT_ACCEPTABLE);</span>
+	}
+
+	@ExceptionHandler(Exception.class)
+	public ResponseEntity&lt;AccountErrorResponse&gt; globalException(Exception exception, WebRequest request) {
+<span class="nc" id="L42">		AccountErrorResponse response = new AccountErrorResponse(LocalDateTime.now(), HttpStatus.NOT_ACCEPTABLE,</span>
+<span class="nc" id="L43">				exception.getMessage(), &quot;Error occurred&quot;);</span>
+<span class="nc" id="L44">		return new ResponseEntity&lt;&gt;(response, HttpStatus.NOT_ACCEPTABLE);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>
